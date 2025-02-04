@@ -57,7 +57,27 @@ const getDadosContato=function(usuarios, contato){
 }
 
 //ok
-const getConversas=function(usuario, contato){
+const getConversas=function(usuario){
+    let numUsuario=String(usuario).toUpperCase()
+     conversasC=[]
+
+    whatsUser.contatos.whatsUsers.forEach(function(dado){
+        dado.contacts.forEach(function(dados){
+            dados.messages.forEach(function(){
+                if(numUsuario==dado.number){
+                    conversasC.push({
+                        nomes: dados.name,
+                        conversas: dados.messages
+                    })
+                }
+            })
+        })
+    })
+    return conversasC
+}
+
+//ok
+const getConversasComUsuario=function(usuario, contato){
     let nomeUsuario=String(usuario).toUpperCase()
     let contatos=String(contato).toUpperCase()
     conversasContatos=[]
@@ -76,11 +96,36 @@ const getConversas=function(usuario, contato){
 }
 
 
+//fazendo
+const getPalavraChave=function(usuario, contato, palavra){
+    let usu=String(usuario).toUpperCase()
+    let cont=String(contato).toUpperCase()
+    let pesquisa=String(palavra).toUpperCase()
+    pesquisaPalavras=[]
+
+    whatsUser.contatos.whatsUsers.forEach(function(dado){
+        dado.contacts.forEach(function(dado2){
+                dado2.messages.forEach(function(palavras){
+                    if(String(dado.number).toUpperCase()==usu&&String(dado2.contacts).toUpperCase()==cont&&String(palavras.messages).toUpperCase()==pesquisa){
+                        pesquisaPalavras.push({
+                            conta: dado.account,
+                            nome: dado2.name,
+                            conversa: palavras.messages
+
+                        })
+                    }
+                })
+        })
+    })
+    return getPalavraChave
+}
 
 //console.log(getDadosPessoais('11987876567'))
 //console.log(getDadosConta('11987876567'))
 //console.log(getDadosContato('11987876567', 'Julia Smith'))
-//console.log(getConversas('11987876567', 'Julia Smith'))
+//console.log(getConversas('11987876567'))
+//console.log(getConversasComUsuario('11987876567', 'Julia Smith'))
+console.log(getPalavraChave('11987876567', 'Julia Smith', 'está'))
 
 
 module.exports={
