@@ -21,8 +21,9 @@ app.use((request, response, next)=>{
 
 const contatos=require('./modulo/funcoesW.js')
 
-app.get('/v1/whatsapp/lista-dados-pessoais', cors(), async function (request, response) {
-    let listaPessoais=contatos.getDadosPessoais()
+app.get('/v1/whatsapp/lista-dados-pessoais/:number', cors(), async function (request, response) {
+    let numero=request.params.number
+    let listaPessoais=contatos.getDadosPessoais(numero)
     if(listaPessoais){
         response.status(200)
         response.json(listaPessoais)
